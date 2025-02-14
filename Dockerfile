@@ -11,4 +11,4 @@ COPY . .
 
 EXPOSE 8080
 
-CMD ["sh", "-c", "uvicorn src.app:app --host 0.0.0.0 --port ${PORT}"]
+CMD ["sh", "-c", "uvicorn src.app:app --host 0.0.0.0 --port ${PORT} --workers 1 --limit-concurrency 10"]

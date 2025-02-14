@@ -3,10 +3,9 @@ from pydantic import BaseModel,conlist
 from typing import List,Optional
 import pandas as pd
 from src.model import recommend, output_recommended_recipes
-import os
 
-dataset = None  # Initialize as None
 
+# dataset=pd.read_csv('Data/dataset.csv',compression='gzip')
 
 app = FastAPI()
 
@@ -43,25 +42,17 @@ class PredictionOut(BaseModel):
 
 
 
-@app.on_event("startup")
-async def load_dataset():
-    global dataset
-    dataset_path = os.path.join(os.getcwd(), "Data/dataset.csv")
-    if os.path.exists(dataset_path):
-        dataset = pd.read_csv(dataset_path, compression='gzip')
-    else:
-        raise FileNotFoundError(f"Dataset not found at {dataset_path}")
 
 @app.get("/")
 def home():
     return {"health_check": "OK"}
 
 
-@app.post("/predict/",response_model=PredictionOut)
-def update_item(prediction_input:PredictionIn):
-    recommendation_dataframe=recommend(dataset,prediction_input.nutrition_input,prediction_input.ingredients,prediction_input.params.dict())
-    output=output_recommended_recipes(recommendation_dataframe)
-    if output is None:
-        return {"output":None}
-    else:
-        return {"output":output}
+# @app.post("/predict/",response_model=PredictionOut)
+# def update_item(prediction_input:PredictionIn):
+#     recommendation_dataframe=recommend(dataset,prediction_input.nutrition_input,prediction_input.ingredients,prediction_input.params.dict())
+#     output=output_recommended_recipes(recommendation_dataframe)
+#     if output is None:
+#         return {"output":None}
+#     else:
+#         return {"output":output}

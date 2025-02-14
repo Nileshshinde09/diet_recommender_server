@@ -1,0 +1,11 @@
+keys.py
+test.py
+__pycache__
+**/__pycache__
+**/.git
+**/.env
+**/tests
+**/local_*
+*.log
+Dockerfile
+docker-compose.yml

@@ -7,14 +7,6 @@ import os
 
 dataset = None  # Initialize as None
 
-@app.on_event("startup")
-async def load_dataset():
-    global dataset
-    dataset_path = os.path.join(os.getcwd(), "Data/dataset.csv")
-    if os.path.exists(dataset_path):
-        dataset = pd.read_csv(dataset_path, compression='gzip')
-    else:
-        raise FileNotFoundError(f"Dataset not found at {dataset_path}")
 
 app = FastAPI()
 
@@ -51,6 +43,14 @@ class PredictionOut(BaseModel):
 
 
 
+@app.on_event("startup")
+async def load_dataset():
+    global dataset
+    dataset_path = os.path.join(os.getcwd(), "Data/dataset.csv")
+    if os.path.exists(dataset_path):
+        dataset = pd.read_csv(dataset_path, compression='gzip')
+    else:
+        raise FileNotFoundError(f"Dataset not found at {dataset_path}")
 
 @app.get("/")
 def home():

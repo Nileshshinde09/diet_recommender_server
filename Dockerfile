@@ -11,4 +11,4 @@ COPY . .
 
 EXPOSE 8080
 # Use Gunicorn for better memory management
-CMD ["gunicorn", "src.app:app", "--bind", "0.0.0.0:${PORT}"]
+CMD ["gunicorn", "src.app:app", "--bind", "0.0.0.0:${PORT}", "--workers", "1", "--threads", "2"]

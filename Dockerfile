@@ -2,13 +2,13 @@ FROM python:3.10.8
 
 WORKDIR /app/backend
 
-COPY requirements.txt .  
+COPY requirements.txt .
 
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-COPY . . 
+COPY . .
 
 EXPOSE 8080
-# Use Gunicorn for better memory management
-CMD ["gunicorn", "src.app:app", "--bind", "0.0.0.0:${PORT}", "--workers", "1", "--threads", "2"]
+
+CMD ["sh", "-c", "uvicorn src.app:app --host 0.0.0.0 --port ${PORT}"]
